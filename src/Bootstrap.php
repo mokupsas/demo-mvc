@@ -22,6 +22,20 @@ if ($environment !== 'production') {
 }
 $whoops->register();
 
-throw new \Exception;
 
-echo "Hello world!";
+
+/**
+* Request and response control
+*/
+$request = new \Http\HttpRequest($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
+$response = new \Http\HttpResponse;
+
+$content = '<h1>Hello World</h1>';
+$response->setContent($content);
+//$response->setStatusCode(200);
+
+foreach ($response->getHeaders() as $header) {
+    header($header, false);
+}
+
+echo $response->getContent();
