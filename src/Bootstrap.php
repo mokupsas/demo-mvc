@@ -25,10 +25,15 @@ $whoops->register();
 
 
 /**
-* Request and response control
+* Dependency injection
 */
 $injector = include('Dependencies.php');
+$injector->alias('Example\Template\Renderer', 'Example\Template\MustacheRenderer');
 
+
+/**
+* Request and response control
+*/
 $request = $injector->make('Http\HttpRequest');
 $response = $injector->make('Http\HttpResponse');
 
