@@ -53,11 +53,14 @@ switch ($routeInfo[0]) {
         $response->setContent('405 - Method not allowed');
         $response->setStatusCode(405);
         break;
-    case \FastRoute\Dispatcher::FOUND:
-        $handler = $routeInfo[1];
-        $vars = $routeInfo[2];
-        call_user_func($handler, $vars);
-        break;
+	case \FastRoute\Dispatcher::FOUND:
+		$className = $routeInfo[1][0];
+		$method = $routeInfo[1][1];
+		$vars = $routeInfo[2];
+		
+		$class = new $className;
+		$class->$method($vars);
+		break;
 }
 
 /**
